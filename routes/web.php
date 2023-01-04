@@ -26,3 +26,12 @@ Route::post('/postlogin', [AuthController::class, 'postlogin']);
 
 Route::get('/home', [AbsenController::class, 'index'])->middleware(['auth', 'role:mahasiswa']);
 Route::post('/absensi', [AbsenController::class, 'absensi'])->middleware(['auth', 'role:mahasiswa']);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/downloadpdf', [AdminController::class, 'downloadpdf']);
+    Route::get('/home/admin', [AdminController::class, 'user']);
+    Route::get('/home/admin/users', [AdminController::class, 'users']);
+    Route::get('/home/admin/prodi', [AdminController::class, 'prodi']);
+    Route::get('/home/admin/add-pbb', [AdminController::class, 'addpbb']);
+});
+
+Route::get('/logout', [AuthController::class, 'logout']);
